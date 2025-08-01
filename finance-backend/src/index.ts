@@ -9,6 +9,7 @@ import {
   InternalServerException,
 } from "./utils/app-error";
 import { asyncHandler } from "./middlewares/asyncHandler.middleware";
+import connectDatabase from "./config/database.config";
 
 const app = express();
 const BASE_PATH = Env.BASE_PATH;
@@ -37,6 +38,7 @@ app.get(
 
 app.use(errorHandler);
 
-app.listen(Env.PORT, () => {
+app.listen(Env.PORT, async () => {
+  await connectDatabase();
   console.log(`Serveur demarre au port ${Env.PORT} en mode ${Env.NODE_ENV}`);
 });
